@@ -1,0 +1,56 @@
+import java.io.*;
+import org.codehaus.plexus.util.*;
+
+boolean result = true;
+
+try
+{
+    File target = new File( basedir, "target" );
+    if ( !target.exists() || !target.isDirectory() )
+    {
+        System.err.println( "target file is missing or not a directory." );
+        return false;
+    }
+
+    File webappDirectory = new File( target, "gwt_greet-1.0" );
+    if ( !webappDirectory.exists() || !webappDirectory.isDirectory() )
+    {
+        System.err.println( "webappDirectory is missing or not a directory." );
+        return false;
+    }    
+    
+    File webappDirectory = new File( target, "gwt_greet-1.0" );
+    if ( !webappDirectory.exists() || !webappDirectory.isDirectory() )
+    {
+        System.err.println( "webappDirectory is missing or not a directory." );
+        return false;
+    }    
+    
+    File manifest = new File ( webappDirectory, "manifest.json" );
+    if ( !manifest.exists() || !manifest.isFile() )
+    {
+        System.err.println( "manifest.json file is missing or a directory." );
+        return false;
+    }
+
+    File nocache = new File ( webappDirectory, "greet/greet.nocache.js" );
+    if ( !nocache.exists() || !nocache.isFile() )
+    {
+        System.err.println( "greet/greet.nocache.js file is missing or a directory." );
+        return false;
+    }
+
+   File crxFile = new File( target, "gwt_greet-1.0.crx" );
+    if ( !crxFile.exists() || !crxFile.isFile() )
+    {
+        System.err.println( "gwt_greet-1.0.crx file is missing or a directory." );
+        return false;
+    }
+}
+catch( Throwable e )
+{
+    e.printStackTrace();
+    result = false;
+}
+
+return result;
