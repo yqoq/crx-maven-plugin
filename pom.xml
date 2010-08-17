@@ -176,7 +176,7 @@
 								<pomInclude>*/pom.xml</pomInclude>
 							</pomIncludes>
 							<postBuildHookScript>verify</postBuildHookScript>
-							<localRepositoryPath>${project.build.directory}/local-repo</localRepositoryPath>
+							<localRepositoryPath>${basedir}/local-repo</localRepositoryPath>
 							<goals>
 								<goal>clean</goal>
 								<goal>package</goal>
@@ -228,6 +228,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<pemKey>${basedir}/key.pem</pemKey>
+		<pemCert>${basedir}/cert.pem</pemCert>
 	</properties>
 
 </project>
