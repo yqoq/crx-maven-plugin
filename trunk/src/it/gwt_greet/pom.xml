@@ -58,8 +58,8 @@
 				<version>@project.version@</version>
 				<extensions>true</extensions>
 				<configuration>
-					<pemKey>key.pem</pemKey>
-					<pemCert>cert.pem</pemCert>
+					<pemKey>@pemKey@</pemKey>
+					<pemCert>@pemCert@</pemCert>
 				</configuration>
 			</plugin>
 			<plugin>
