@@ -6,5 +6,10 @@
       <prefix>crx</prefix>
       <artifactId>crx-maven-plugin</artifactId>
     </plugin>
+    <plugin>
+      <name>CRX Maven Archetype</name>
+      <prefix>crx-maven-archetype</prefix>
+      <artifactId>crx-maven-archetype</artifactId>
+    </plugin>
   </plugins>
 </metadata>
