@@ -1,0 +1,19 @@
+{
+  "name": "${artifactId}",
+  "description": "Please describe your Chrome Webapp.",
+  "version": "1",
+  "icons": {
+    "24": "images/gwt-24.jpg",
+    "128": "images/gwt-128.png"
+  },
+  "app": {
+    "launch": {
+      "local_path": "index.html"
+    }
+  },
+  "permissions": [
+    "geolocation",
+    "notifications",
+    "unlimited_storage"
+  ]
+}
