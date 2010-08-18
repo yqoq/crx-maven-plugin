@@ -1,0 +1,12 @@
+{
+  "name": "HTML5Rocks Slide Deck",
+  "description": "HTML5Rocks slide deck, as an HTML5 Chrome Webapp.",
+  "version": "1",
+  "icons": { "24": "gwt-24.jpg", "128": "gwt-128.png" },
+  "app": {
+    "launch": {
+      "local_path": "index.html"
+    }
+  },
+  "permissions": ["unlimited_storage"]
+}
