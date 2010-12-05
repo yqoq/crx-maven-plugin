@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>com.google.code</groupId>
 		<artifactId>crx-maven</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<artifactId>crx-maven-plugin</artifactId>
@@ -16,9 +15,9 @@
 	<description>This plugin generates Google Chrome Web App (CRX) files.</description>
 
 	<scm>
-		<connection>scm:svn:http://crx-maven-plugin.googlecode.com/svn/trunk/plugin</connection>
-		<developerConnection>scm:svn:https://crx-maven-plugin.googlecode.com/svn/trunk/plugin</developerConnection>
-		<url>http://code.google.com/p/crx-maven-plugin/source/browse/#svn/trunk/plugin</url>
+		<connection>scm:svn:http://crx-maven-plugin.googlecode.com/svn/tags/crx-maven-plugin-1.0.0/plugin</connection>
+		<developerConnection>scm:svn:https://crx-maven-plugin.googlecode.com/svn/tags/crx-maven-plugin-1.0.0/plugin</developerConnection>
+		<url>http://code.google.com/p/crx-maven-plugin/source/browse/#svn/tags/crx-maven-plugin-1.0.0/plugin</url>
 	</scm>
 
 	<dependencies>
