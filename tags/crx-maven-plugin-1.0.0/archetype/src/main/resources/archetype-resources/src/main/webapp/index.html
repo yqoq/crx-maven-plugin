@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>${artifactId} HTML5 Chrome Webapp</title>
+    <style>      
+      body {
+        font: 16px "Lucida Grande", "Trebuchet MS", Verdana, sans-serif;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0px; top: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+	Create your ${artifactId} HTML5 Chrome Webapp here!
+	
+	<hr/>
+	<script type="text/javascript">
+	// Create a simple text notification:
+	var notification = webkitNotifications.createNotification(
+	  'images/star-48.png',  // icon url - can be relative
+	  'Hello!',  // notification title
+	  'Lorem ipsum...'  // notification body text
+	);
+
+	// Or create an HTML notification:
+	var notificationHtml = webkitNotifications.createHTMLNotification(
+	  'notification.html'  // html url - can be relative
+	);
+
+	// Then show the notification.
+	//notification.show();
+	</script>
+	
+	<input type="button" onclick="notification.show()" value="launch notification"/>
+	<br/>
+	<input type="button" onclick="notificationHtml.show()" value="launch notification.html"/>
+
+  </body>
+</html>

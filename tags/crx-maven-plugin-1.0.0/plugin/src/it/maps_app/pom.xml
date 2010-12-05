@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>maps-app</groupId>
+	<artifactId>maps-app</artifactId>
+	<packaging>crx</packaging>
+	<version>1.0</version>
+
+	<name>maps-app</name>
+	<url>http://code.google.com/chrome/apps/docs/developers_guide.html</url>
+	<description>Sample project from Chrome Apps developer guide.</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- add any overlays to be used in the CRX here -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>exploded</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.google.code</groupId>
+				<artifactId>crx-maven-plugin</artifactId>
+				<version>@project.version@</version>
+				<extensions>true</extensions>
+				<configuration>
+					<pemKey>@pemKey@</pemKey>
+					<pemCert>@pemCert@</pemCert>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+</project>

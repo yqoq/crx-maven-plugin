@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="${project.name}">
+
+  <publishDate format="MMM. dd, yyyy" />
+<!--
+  <skin>
+    <groupId>org.apache.tapestry</groupId>
+    <artifactId>maven-skin</artifactId>
+    <version>1.1</version>
+  </skin>
+-->
+
+  <body>
+
+    <links>
+    </links>
+
+	<menu name="Overview">
+		<item name="Introduction" href="index.html" />
+	</menu>
+
+	<menu name="References">
+	    <item name="Chrome Web Store" href="https://chrome.google.com/webstore/" />
+	    <item name=" Installable Web Apps" href="http://code.google.com/chrome/apps/" />
+	    <item name="Developer's Guide" href="http://code.google.com/chrome/apps/docs/developers_guide.html" />
+	</menu>
+
+    ${reports}
+
+  </body>
+
+</project>
