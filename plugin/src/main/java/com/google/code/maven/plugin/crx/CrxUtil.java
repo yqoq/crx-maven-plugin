@@ -109,10 +109,8 @@ public class CrxUtil {
 		FilenameFilter filter = new FilesOnlyFilenameFilter();
 
 		for (String shortPath : include) {
-			System.out.println("shortPath: " + shortPath);
 			if (filter.accept(webappDir, shortPath)) {
 				File file = new File(webappDir, shortPath);
-				System.out.println("file path: " + file);
 				files.put(shortPath, file);
 			}
 		}
