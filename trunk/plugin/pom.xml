@@ -117,7 +117,7 @@
 							<target>
 								<echo level="info">Publishing to Google Code using: ${google.code.username} / ${google.code.password}</echo>
 								<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask"
-									classpath="${basedir}/../lib/ant-googlecode-0.0.2.jar" name="gcupload" />
+									classpath="${project.basedir}/../lib/ant-googlecode-0.0.2.jar" name="gcupload" />
 
 								<gcupload username="${google.code.username}" password="${google.code.password}"
 									projectname="${project.artifactId}"
