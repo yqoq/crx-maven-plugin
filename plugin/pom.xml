@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
@@ -102,6 +103,31 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-plugin-plugin</artifactId>
 				<version>2.6</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>deploy</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo level="info">Publishing to Google Code using: ${google.code.username} / ${google.code.password}</echo>
+								<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask"
+									classpath="${basedir}/../lib/ant-googlecode-0.0.2.jar" name="gcupload" />
+
+								<gcupload username="${google.code.username}" password="${google.code.password}"
+									projectname="${project.artifactId}"
+									filename="${project.build.directory}/${project.build.finalName}.jar"
+									targetfilename="${project.build.finalName}.jar" summary="${project.name} ver ${project.version}"
+									labels="gwt, maven, plugin" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
