@@ -9,6 +9,7 @@ import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
+import org.codehaus.plexus.util.DirectoryScanner;
 import org.codehaus.plexus.util.StringUtils;
 
 /**
@@ -45,6 +46,8 @@ import org.codehaus.plexus.util.StringUtils;
  * @requiresDependencyResolution runtime
  */
 public class CrxMojo extends AbstractMojo {
+	public static final String[] DEFAULT_INCLUDES = { "**/**" };
+
 	/**
 	 * The Project.
 	 * 
@@ -184,7 +187,10 @@ public class CrxMojo extends AbstractMojo {
 
 			getLog().info("Packaging Chrome CRX");
 
-			crx = util.buildCrx(webappDirectory, crx.getAbsolutePath());
+			String[] include = getFilesToIncludes(webappDirectory,
+					getIncludes(), getExcludes());
+			crx = util
+					.buildCrx(crx.getAbsolutePath(), webappDirectory, include);
 
 			if (classifier == null) {
 				project.getArtifact().setFile(crx);
@@ -229,5 +235,26 @@ public class CrxMojo extends AbstractMojo {
 				StringUtils.defaultString(webappIncludes), ",")));
 
 		return includes.toArray(new String[] {});
+	}
+
+	protected static String[] getFilesToIncludes(File baseDir,
+			String[] includes, String[] excludes) {
+
+		final DirectoryScanner scanner = new DirectoryScanner();
+		scanner.setBasedir(baseDir);
+
+		if (excludes != null) {
+			scanner.setExcludes(excludes);
+		}
+		scanner.addDefaultExcludes();
+
+		if (includes != null && includes.length > 0) {
+			scanner.setIncludes(includes);
+		} else {
+			scanner.setIncludes(DEFAULT_INCLUDES);
+		}
+
+		scanner.scan();
+		return scanner.getIncludedFiles();
 	}
 }

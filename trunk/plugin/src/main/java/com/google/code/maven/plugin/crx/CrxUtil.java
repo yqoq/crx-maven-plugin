@@ -86,11 +86,11 @@ public class CrxUtil {
 	 * @throws IOException
 	 * @throws GeneralSecurityException
 	 */
-	public File buildCrx(File webappDir, String crxFilename)
+	public File buildCrx(String crxFilename, File webappDir)
 			throws IOException, GeneralSecurityException {
 		if (webappDir == null || !webappDir.isDirectory()) {
-			throw new RuntimeException(
-					"supply a directory to create the CRX from");
+			throw new RuntimeException("cannot build CRX from directory: "
+					+ webappDir);
 		}
 
 		// check manifest
@@ -99,8 +99,31 @@ public class CrxUtil {
 			throw new FileNotFoundException("manifest not found: " + manifest);
 		}
 
+		return buildCrx(crxFilename, webappStructure(webappDir));
+	}
+
+	public File buildCrx(String crxFilename, File webappDir, String[] include)
+			throws IOException, GeneralSecurityException {
+
+		Map<String, File> files = new HashMap<String, File>();
+		FilenameFilter filter = new FilesOnlyFilenameFilter();
+
+		for (String shortPath : include) {
+			System.out.println("shortPath: " + shortPath);
+			if (filter.accept(webappDir, shortPath)) {
+				File file = new File(webappDir, shortPath);
+				System.out.println("file path: " + file);
+				files.put(shortPath, file);
+			}
+		}
+
+		return buildCrx(crxFilename, files);
+	}
+
+	private File buildCrx(String crxFilename, Map<String, File> files)
+			throws IOException, GeneralSecurityException {
 		File zip = File.createTempFile("crx", ".temp.zip");
-		doZip(webappStructure(webappDir), zip);
+		doZip(files, zip);
 
 		PrivateKey privateKey = getPrivateKey(privateKey2);
 		byte[] signature = sign(privateKey, zip);
@@ -130,6 +153,7 @@ public class CrxUtil {
 		out.close();
 
 		return crx;
+
 	}
 
 	/**
@@ -271,17 +295,11 @@ public class CrxUtil {
 		return zipFile.length();
 	}
 
+	// TODO: accept includes and excludes filters as argument here
 	private static HashMap<String, File> webappStructure(File webappDir) {
 		// find all files
 		File[] files = FileUtil.listFilesAsArray(webappDir,
-				new FilenameFilter() {
-					public boolean accept(File dir, String name) {
-						File f = new File(dir, name);
-						// TODO: filter based on include/exclude
-						boolean accept = f.isFile() && f.exists();
-						return accept;
-					}
-				}, true);
+				new FilesOnlyFilenameFilter(), true);
 
 		// map structure keys relative to webappDirectory
 		HashMap<String, File> struct = new HashMap<String, File>(files.length);
@@ -356,5 +374,14 @@ public class CrxUtil {
 		sb.append(END_PRIVATE_KEY);
 
 		return sb.toString();
+	}
+
+	private static class FilesOnlyFilenameFilter implements FilenameFilter {
+		public boolean accept(File dir, String name) {
+			File f = new File(dir, name);
+			// TODO: filter based on include/exclude
+			boolean accept = f.isFile() && f.exists();
+			return accept;
+		}
 	}
 }

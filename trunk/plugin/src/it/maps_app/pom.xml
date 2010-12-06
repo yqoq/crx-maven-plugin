@@ -39,6 +39,7 @@
 				<configuration>
 					<pemKey>@pemKey@</pemKey>
 					<pemCert>@pemCert@</pemCert>
+					<excludes>WEB-INF/**</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
