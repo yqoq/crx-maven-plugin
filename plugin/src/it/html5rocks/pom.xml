@@ -41,6 +41,7 @@
 				<configuration>
 					<pemKey>${chrome-webapp.key}</pemKey>
 					<pemCert>${chrome-webapp.cert}</pemCert>
+					<excludes>WEB-INF/**</excludes>
 				</configuration>
 			</plugin>
 		</plugins>
