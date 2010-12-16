@@ -1,7 +1,7 @@
 {
   "name": "GWT Greet Offline App",
   "description": "This app provides an example of using GWT to build an AJAX-y RIA app that runs offline.",
-  "version": "1",
+  "version": "1.0",
   "icons": { "24": "gwt-24.jpg", "128": "gwt-128.png" },
   "app": {
     "launch": {

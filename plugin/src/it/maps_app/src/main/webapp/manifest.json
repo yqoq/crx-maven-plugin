@@ -1,6 +1,6 @@
 {
   "name": "Google Maps",
-  "version": "3",
+  "version": "1.0",
   "icons": { "24": "24.png", "128": "128.png" },
   "app": {
     "urls": [
