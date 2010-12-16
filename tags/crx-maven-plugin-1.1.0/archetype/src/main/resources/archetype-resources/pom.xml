@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${groupId}</groupId>
+	<artifactId>${artifactId}</artifactId>
+	<version>${version}</version>
+	<packaging>crx</packaging>
+
+	<name>Chrome CRX Webapp</name>
+	<description>Skeleton project for a Google Chrome CRX Webapp.</description>
+
+	<build>
+		<plugins>
+			<!-- Use the maven-war-plugin to stage files for the crx plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration></configuration>
+				<executions>
+					<execution>
+						<id>exploded</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<!-- be sure to create your key and cert files, see crx-maven-plugin docs -->
+			<plugin>
+				<groupId>com.google.code</groupId>
+				<artifactId>crx-maven-plugin</artifactId>
+				<version>1.0-SNAPSHOT</version>
+				<extensions>true</extensions>
+				<configuration>
+					<pemKey>${chrome-webapp.key}</pemKey>
+					<pemCert>${chrome-webapp.cert}</pemCert>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+</project>

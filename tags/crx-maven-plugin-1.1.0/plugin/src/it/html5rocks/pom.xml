@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.google.code.it</groupId>
+	<artifactId>html5rocks</artifactId>
+	<version>1.0</version>
+	<packaging>crx</packaging>
+
+	<name>HTML5Rocks Slide Deck</name>
+	<description>
+	This Chrome Webapp demonstrates using HTML5 content from slides.html5rocks.com.
+	</description>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<!-- add any overlays to be used in the CRX here -->
+				</configuration>
+				<executions>
+					<execution>
+						<id>exploded</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>exploded</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>com.google.code</groupId>
+				<artifactId>crx-maven-plugin</artifactId>
+				<version>@project.version@</version>
+				<extensions>true</extensions>
+				<configuration>
+					<pemKey>${chrome-webapp.key}</pemKey>
+					<pemCert>${chrome-webapp.cert}</pemCert>
+					<excludes>WEB-INF/**</excludes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+</project>

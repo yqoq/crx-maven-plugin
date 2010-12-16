@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.google.code</groupId>
+		<artifactId>crx-maven</artifactId>
+		<version>1.1.0</version>
+	</parent>
+
+	<artifactId>crx-maven-plugin</artifactId>
+	<packaging>maven-plugin</packaging>
+
+	<name>CRX Maven Plugin</name>
+	<description>This plugin generates Google Chrome Web App (CRX) files.</description>
+
+	<scm>
+		<connection>scm:svn:http://crx-maven-plugin.googlecode.com/svn/tags/crx-maven-plugin-1.1.0/plugin</connection>
+		<developerConnection>scm:svn:https://crx-maven-plugin.googlecode.com/svn/tags/crx-maven-plugin-1.1.0/plugin</developerConnection>
+		<url>http://code.google.com/p/crx-maven-plugin/source/browse/#svn/tags/crx-maven-plugin-1.1.0/plugin</url>
+	</scm>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>2.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>2.0.4</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<extensions>
+			<extension>
+				<groupId>org.jvnet.wagon-svn</groupId>
+				<artifactId>wagon-svn</artifactId>
+				<version>1.11</version>
+			</extension>
+		</extensions>
+
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<tags>
+						<tag>
+							<name>phase</name>
+							<placement>a</placement>
+							<head>phase: </head>
+						</tag>
+						<tag>
+							<name>goal</name>
+							<placement>a</placement>
+							<head>goal: </head>
+						</tag>
+						<tag>
+							<name>requiresDependencyResolution</name>
+							<placement>a</placement>
+							<head>requiresDependencyResolution: </head>
+						</tag>
+					</tags>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadoc</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+						<configuration>
+							<links>
+								<link>http://java.sun.com/j2se/1.5.0/docs/api</link>
+								<link>http://maven.apache.org/ref/2.2.1/maven-plugin-api/apidocs</link>
+							</links>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-plugin-plugin</artifactId>
+				<version>2.6</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<phase>deploy</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<target>
+								<echo level="info">Publishing to Google Code using: ${google.code.username} / ${google.code.password}</echo>
+								<taskdef classname="net.bluecow.googlecode.ant.GoogleCodeUploadTask" classpath="${project.basedir}/../lib/ant-googlecode-0.0.2.jar" name="gcupload" />
+
+								<gcupload username="${google.code.username}" password="${google.code.password}" projectname="${project.artifactId}" filename="${project.build.directory}/${project.build.finalName}.jar" targetfilename="${project.build.finalName}.jar" summary="${project.name} ver ${project.version}" labels="gwt, maven, plugin" />
+							</target>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>run-its</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-invoker-plugin</artifactId>
+						<version>1.3</version>
+						<configuration>
+							<projectsDirectory>src/it</projectsDirectory>
+							<pomIncludes>
+								<pomInclude>*/pom.xml</pomInclude>
+							</pomIncludes>
+							<postBuildHookScript>verify</postBuildHookScript>
+							<localRepositoryPath>${basedir}/local-repo</localRepositoryPath>
+							<goals>
+								<goal>clean</goal>
+								<goal>package</goal>
+							</goals>
+							<!-- <settingsFile>src/it/settings.xml</settingsFile> -->
+							<cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
+						</configuration>
+						<executions>
+							<execution>
+								<id>integration-test</id>
+								<goals>
+									<goal>install</goal>
+									<goal>run</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>release-sign-artifacts</id>
+			<activation>
+				<property>
+					<name>performRelease</name>
+					<value>true</value>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<pemKey>${basedir}/key.pem</pemKey>
+		<pemCert>${basedir}/cert.pem</pemCert>
+	</properties>
+
+</project>

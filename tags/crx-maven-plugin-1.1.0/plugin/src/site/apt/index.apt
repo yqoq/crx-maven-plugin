@@ -1,0 +1,58 @@
+ -----
+ Home
+ -----
+ Jason Thrasher
+ -----
+ August 16, 2010
+ -----
+
+
+  [[*]] {{{http://code.google.com/chrome/apps/}Installable Web Apps}}
+
+  [[*]] {{{http://code.google.com/chrome/apps/docs/developers_guide.html}Developer's Guide}}
+ 
+  This module contains widgets implemented using GWT.
+ 
+  The plugin requires a public and private key pair to sign the .crx file.  There are two ways to create the key pair:
+
+Option 1: Use Chrome Browser
+
+  (the UI-intensive way)
+
+  Create keypair using Chrome to create the first .crx file
+
++------------------------------------------------------------------------+
+# prerequisite: use Chrome to pack your CRX
+# Chrome will will automatically generate a .pem private key file
+# use openssl to extract public cert from Chrome-generated pem file
+openssl rsa -in key.pem -pubout > cert.pem
+# now configure plugin to use the cert.pem and key.pem
++------------------------------------------------------------------------+
+
+Option 2: Use OpenSSL
+
+  (the command-line way)
+
++------------------------------------------------------------------------+
+# use openssl to generate keypair
+openssl genrsa -out keypair.pem 1024
+# change format to pkcs8
+openssl pkcs8 -topk8 -in keypair.pem -inform pem -out key.pem -outform pem -nocrypt
+# extract the public key from an RSA private key, try:
+openssl rsa -in key.pem -pubout > cert.pem
+# now configure plugin to use the cert.pem and key.pem
++------------------------------------------------------------------------+
+
+Pack Webapps with Chrome
+
+  It's possible to pack webapps from the command-line useing the Chrome web browser.  The command will be something like this:
+
++------------------------------------------------------------------------+
+/Applications/Google Chrome.app/Contents/MacOS/Google Chrome \
+   --enable-apps \
+   --pack-extension=my_app \
+   --pack-extension-key=my_app.pem \
+   --no-message-box
++------------------------------------------------------------------------+
+
+ 
