@@ -39,8 +39,8 @@
 				<version>@project.version@</version>
 				<extensions>true</extensions>
 				<configuration>
-					<pemKey>${chrome-webapp.key}</pemKey>
-					<pemCert>${chrome-webapp.cert}</pemCert>
+					<pemKey>@pemKey@</pemKey>
+					<pemCert>@pemCert@</pemCert>
 					<excludes>WEB-INF/**</excludes>
 				</configuration>
 			</plugin>
